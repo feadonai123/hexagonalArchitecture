@@ -1,3 +1,5 @@
+import ClientEntity from "../../entities/client"
+
 export interface ICreateClientData {
   name: string,
   email: string,
@@ -7,5 +9,5 @@ export interface ICreateClientData {
 }
 
 export interface ICreateClientUseCase {
-  execute(clientData: ICreateClientData): Promise<void>
+  execute(clientData: ICreateClientData): Promise<ClientEntity>
 }

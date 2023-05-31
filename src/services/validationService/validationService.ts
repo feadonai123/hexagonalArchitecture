@@ -1,5 +1,5 @@
-import ValidationError from "../errors/validationError"
-import { IValidationService } from "../ports/IValidationService"
+import ValidationError from "../../errors/validationError"
+import { IValidationService } from "./IValidationService"
 
 export const validationService : IValidationService = {
   validateName(name: string): void {
@@ -25,6 +25,9 @@ export const validationService : IValidationService = {
   validateBirthDate(birthDate: Date): void {
     if (!birthDate) {
       throw new ValidationError("Birth date is required")
+    }
+    if (!(birthDate instanceof Date) || isNaN(birthDate.getTime())) {
+      throw new Error('Birth date must be a valid date')
     }
   }
 }

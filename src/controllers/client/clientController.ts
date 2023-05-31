@@ -1,6 +1,6 @@
 import { Express, Router } from "express"
 import { createClientController } from "./routes/createClientController"
-import { ICreateClientUseCase } from "../../ports/ICreateClientUseCase"
+import { ICreateClientUseCase } from "../../useCases/createClient/ICreateClientUseCase"
 
 export const clientController = (app: Express, expressRouter: Router, createClientUseCase: ICreateClientUseCase) => {
 

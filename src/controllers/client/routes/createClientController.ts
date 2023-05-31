@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ICreateClientUseCase } from '../../../ports/ICreateClientUseCase';
+import { ICreateClientUseCase } from '../../../useCases/createClient/ICreateClientUseCase';
 
 interface ICreateClientController {
   listenForRequest(req: Request, res: Response): Promise<void>
@@ -17,15 +17,17 @@ export const createClientController = (createClientUseCase: ICreateClientUseCase
         birthDate
       } = req.body;
     
-      createClientUseCase.execute({
+      const client = await createClientUseCase.execute({
         name,
         email,
         phone,
         cpf,
-        birthDate
+        birthDate: new Date(birthDate)
       })
     
-      res.status(201).send("Cliente criado com sucesso")
+      res.status(201).json({
+        clientId: client.id
+      })
     }
   }
 }

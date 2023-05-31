@@ -5,7 +5,8 @@ export default class ClientEntity{
     readonly email: string,
     readonly phone: string,
     readonly cpf: string,
-    readonly birthDate: Date
+    readonly birthDate: Date,
+    readonly id?: string
   ) {}
 
 }
