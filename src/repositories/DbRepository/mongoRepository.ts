@@ -6,6 +6,21 @@ import ClientEntity from "../../entities/client"
 export const mongoRepository = (prisma: PrismaClient): IDbRepository => {
 
   return {
+    async getClient(id) {
+      try{
+        const clientDB = await prisma.client.findUnique({
+          where: {
+            id: id
+          }
+        })
+
+        if(!clientDB) throw new PersistenceError("Cliente não encontrado", 404)
+        const client = new ClientEntity(clientDB.name, clientDB.email, clientDB.phone, clientDB.cpf, clientDB.birthDate, clientDB.id)
+        return client
+      } catch (error) {
+        throw new PersistenceError("Erro ao buscar cliente no banco", 500)
+      }
+    },
     async createClient(client) {
       try{
         const clientDB = await prisma.client.create({
@@ -21,7 +36,7 @@ export const mongoRepository = (prisma: PrismaClient): IDbRepository => {
         const newClient = new ClientEntity(clientDB.name, clientDB.email, clientDB.phone, clientDB.cpf, clientDB.birthDate, clientDB.id)
         return newClient
       } catch (error) {
-        throw new PersistenceError("Erro ao criar cliente no banco"+ error, 500)
+        throw new PersistenceError("Erro ao criar cliente no banco", 500)
       }
     },
     async deleteClient(id) {

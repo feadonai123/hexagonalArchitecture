@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { ICreateClientUseCase } from '../../../useCases/createClient/ICreateClientUseCase';
+import { IClientUseCase } from '../../../useCases/client/IClientUseCase';
 
 interface ICreateClientController {
   listenForRequest(req: Request, res: Response): Promise<void>
 }
 
-export const createClientController = (createClientUseCase: ICreateClientUseCase) : ICreateClientController =>{
+export const createClientController = (clientUseCase: IClientUseCase) : ICreateClientController =>{
   
   return {
     async listenForRequest (req: Request, res: Response): Promise<void> {
@@ -17,7 +17,7 @@ export const createClientController = (createClientUseCase: ICreateClientUseCase
         birthDate
       } = req.body;
     
-      const client = await createClientUseCase.execute({
+      const client = await clientUseCase.createClient({
         name,
         email,
         phone,

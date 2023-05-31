@@ -1,13 +1,13 @@
-import { ICreateClientUseCase } from "./ICreateClientUseCase"
 import { IValidationService } from "../../services/validationService/IValidationService"
-import { IDbRepository } from "../../repositories/DB/IDbRepository"
+import { IDbRepository } from "../../repositories/DbRepository/IDbRepository"
+import { ICreateClientData } from "./IClientUseCase"
 
 import ClientEntity from "../../entities/client"
 
-export const createClientUseCase = (validationService: IValidationService, clientRepository: IDbRepository) : ICreateClientUseCase => {
+export const createClientUseCase = (validationService: IValidationService, clientRepository: IDbRepository) => {
 
   return {
-    async execute (clientData) {
+    async execute (clientData: ICreateClientData) {
 
       validationService.validateName(clientData.name)
       validationService.validateEmail(clientData.email)

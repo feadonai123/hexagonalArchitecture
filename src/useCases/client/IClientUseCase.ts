@@ -8,6 +8,7 @@ export interface ICreateClientData {
   birthDate: Date
 }
 
-export interface ICreateClientUseCase {
-  execute(clientData: ICreateClientData): Promise<ClientEntity>
+export interface IClientUseCase {
+    createClient(clientData: ICreateClientData): Promise<ClientEntity>
+    getClient(idClient: string): Promise<ClientEntity>
 }

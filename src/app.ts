@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { clientController } from './controllers/client/clientController';
-import { createClientUseCase } from './useCases/createClient/createClientUseCase';
-import { mongoRepository } from './repositories/DB/mongoRepository';
-import { inMemoryRepository } from './repositories/DB/inMemoryRepository';
+import { clientUseCase } from './useCases/client/clientUseCase';
+import { mongoRepository } from './repositories/DbRepository/mongoRepository';
+import { inMemoryRepository } from './repositories/DbRepository/inMemoryRepository';
 import { validationService } from './services/validationService/validationService';
 import AppError from './errors/appError';
 
@@ -22,9 +22,9 @@ export const appFactory = ()=>{
   const mongoRepositoryInstance = mongoRepository(prisma);
   const inMemoryRepositoryInstance = inMemoryRepository();
 
-  const createClientUseCaseInstance = createClientUseCase(validationService, mongoRepositoryInstance);
+  const createClientUseCase = clientUseCase(validationService, mongoRepositoryInstance);
 
-  clientController(app, router, createClientUseCaseInstance).listenForRoutes();
+  clientController(app, router, createClientUseCase).listenForRoutes();
 
   app.use((err: Error, req: Request, res: Response, next: Function) => {
     if(err instanceof AppError){
